@@ -42,8 +42,8 @@ client.on("message", message => {
 	const command = client.commands.find(c => c.aliases.includes(commandName) || c.name === commandName)
 
 	if (command) {
-		console.log(`${message.member.displayName} used command: ${commandName}`)
-		command.run(client, args, message)
+		console.log(`${message.member.displayName} used command: ${command.name}`);
+		command.run(client, args, message);
 	}
 	else {
 		message.channel.send("Command doesn't exist!")

@@ -29,7 +29,7 @@ client.on("message", message => {
     const commandName = args.shift().toLowerCase();
     const command = client.commands.find(c => c.aliases.includes(commandName) || c.name === commandName);
     if (command) {
-        console.log(`${message.member.displayName} used command: ${commandName}`);
+        console.log(`${message.member.displayName} used command: ${command.name}`);
         command.run(client, args, message);
     }
     else {
