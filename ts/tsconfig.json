@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "outDir": "../",
+        "module": "CommonJS"
+    },
+    "include": [
+        "./index.ts"
+    ],
+    "exclude": [ "./commands" ],
+    
+}
