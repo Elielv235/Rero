@@ -28,8 +28,10 @@ client.on("message", message => {
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
     const command = client.commands.find(c => c.aliases.includes(commandName) || c.name === commandName);
-    if (command)
+    if (command) {
+        console.log(`${message.member.displayName} used command: ${commandName}`);
         command.run(client, args, message);
+    }
     else {
         message.channel.send("Command doesn't exist!");
     }
