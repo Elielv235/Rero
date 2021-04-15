@@ -15,13 +15,20 @@ client.commands = new Discord.Collection()
 
 
 client.on('ready', () => {
-	const files = fs.readdirSync("./commands")
+	let files = fs.readdirSync("./commands")
 	for (var file of files) {
         if (file.endsWith(".js")) {
             const item: Command = require(`./commands/${file}`)
 
 			// @ts-ignore
             client.commands.set(item.name, item)
+        }
+    }
+
+	files = fs.readdirSync("./events")
+	for (var file of files) {
+        if (file.endsWith(".js")) {
+            require(`./events/${file}`).registerEvent(client)
         }
     }
 
@@ -39,15 +46,16 @@ client.on("message", message => {
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
+	
 	const command = client.commands.find(c => c.aliases.includes(commandName) || c.name === commandName)
 
 	if (command) {
-		console.log(`${message.member.displayName} used command: ${command.name}`);
+		console.log(`${message.member} used command: ${command.name}`);
 		command.run(client, args, message);
 	}
 	else {
 		message.channel.send("Command doesn't exist!")
-	}
+	} 
 });
 
 

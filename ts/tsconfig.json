@@ -4,9 +4,5 @@
         "outDir": "../",
         "module": "CommonJS"
     },
-    "include": [
-        "./index.ts"
-    ],
-    "exclude": [ "./commands" ],
-    
+    "exclude": ["./h"]
 }

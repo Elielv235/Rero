@@ -8,12 +8,18 @@ const client = new Discord.Client();
 // @ts-ignore
 client.commands = new Discord.Collection();
 client.on('ready', () => {
-    const files = fs.readdirSync("./commands");
+    let files = fs.readdirSync("./commands");
     for (var file of files) {
         if (file.endsWith(".js")) {
             const item = require(`./commands/${file}`);
             // @ts-ignore
             client.commands.set(item.name, item);
+        }
+    }
+    files = fs.readdirSync("./events");
+    for (var file of files) {
+        if (file.endsWith(".js")) {
+            require(`./events/${file}`).registerEvent(client);
         }
     }
     client.users.cache.find(user => user.id === '363581701491916800').send("מישהו הפעיל אותי");
@@ -29,7 +35,7 @@ client.on("message", message => {
     const commandName = args.shift().toLowerCase();
     const command = client.commands.find(c => c.aliases.includes(commandName) || c.name === commandName);
     if (command) {
-        console.log(`${message.member.displayName} used command: ${command.name}`);
+        console.log(`${message.member} used command: ${command.name}`);
         command.run(client, args, message);
     }
     else {
